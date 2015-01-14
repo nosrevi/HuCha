@@ -1,0 +1,28 @@
+<!doctype html>
+<html ng-app="popup">
+  <head>
+    <title>Getting Started Extension's Popup</title>
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css"/>
+    <style type="text/css">
+        body {
+            height: 300; !important
+            width: 300; !important
+        }
+        html {
+            height: 300; !important
+            width: 300; !important
+        }
+    </style>
+  </head>
+  <body ng-controller="mainController" class="container">
+    替换:
+    {{test}}
+    <input id="sub_from" type="text"/></input> To <input id="sub_to" type="text"/></input>
+
+    <div id="status"></div>
+    <button id="save" onclick="save();">Save</button>
+    <script src="lib/angular.min.js"></script>
+    <script src="lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html>

@@ -1,0 +1,31 @@
+{
+  "manifest_version": 2,
+  "name": "Hupu Extension",
+  "version": "0.1",
+  "description": "customise your Hupu experience",
+  "icons": {
+    "38": "images/icon.png"
+  },
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "permissions": [
+    "tabs",
+    "storage"
+  ],
+  "page_action": {
+    "default_icon": "images/marker.png",
+    "default_title": "Hupu Filter",
+    "default_popup": "popup.html"
+  },
+
+  "options_page": "options.html",
+
+  "content_scripts": [
+    {
+      "matches": ["http://*.hupu.com/*", "https://*.hupu.com/*"],
+      "js": ["lib/jquery-1.11.2.min.js","filter.js"],
+      "run_at": "document_end"
+    }
+  ]
+}
