@@ -23,7 +23,19 @@ function checkForValidUrl(tabId, changeInfo, tab) {
   }
 };
 
+localStorage['CC']= 1;
 chrome.tabs.onUpdated.addListener(checkForValidUrl);
+
+chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
+  if (request.storage) {
+    if (typeof request.value != 'undefined') {
+      localStorage[request.storage] = request.value;
+    }
+    sendResponse({storage: localStorage[request.storage]});
+  } else {
+    sendResponse({});
+  }
+});
 
 // Initialization.
 function init() {
