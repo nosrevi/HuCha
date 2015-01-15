@@ -5,20 +5,19 @@
     <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css"/>
     <style type="text/css">
         body {
-            height: 300; !important
-            width: 300; !important
-        }
-        html {
-            height: 300; !important
-            width: 300; !important
+            height: 300px;
+            width: 300px;
+            overflow-x: hidden;
         }
     </style>
   </head>
   <body ng-controller="mainController" class="container">
-    替换:
-    {{test}}
-    <input id="sub_from" type="text"/></input> To <input id="sub_to" type="text"/></input>
-
+    <div class="list-group">
+      <li href="#" class="list-group-item">捕蟹笼</li>
+      <li href="#" class="list-group-item">图片隐藏</li>
+      <li href="#" class="list-group-item">黑名单</li>
+      <li href="#" class="list-group-item">王旭雷达</li>
+    </div>
     <div id="status"></div>
     <button id="save" onclick="save();">Save</button>
     <script src="lib/angular.min.js"></script>
