@@ -20,10 +20,6 @@
   var tpcId;
   tpcId = $('h1#j_data').attr('tid');
 
-  chrome.extension.sendRequest({storage: 'CC'}, function(response) {
-    console.log('CC=> ' + response.storage);
-  });
-
   while (node = walk.nextNode()) {
     // Get images and push into array
     if(typeof node.tagName != 'undefined' && node.tagName === 'IMG') {

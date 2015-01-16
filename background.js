@@ -23,7 +23,9 @@ function checkForValidUrl(tabId, changeInfo, tab) {
   }
 };
 
-localStorage['CC']= 1;
+var settings = JSON.stringify({'CC':true});
+//localStorage['settings'] = '1';
+chrome.storage.local.set({'settings': settings});
 chrome.tabs.onUpdated.addListener(checkForValidUrl);
 
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {

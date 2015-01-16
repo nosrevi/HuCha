@@ -5,23 +5,23 @@
     <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css"/>
     <style type="text/css">
         body {
-            height: 300px;
-            width: 300px;
+            height: 200px;
+            width: 250px;
             overflow-x: hidden;
         }
     </style>
   </head>
   <body ng-controller="mainController" class="container">
-    <div class="list-group">
-      <li href="#" class="list-group-item">捕蟹笼</li>
-      <li href="#" class="list-group-item">图片隐藏</li>
-      <li href="#" class="list-group-item">黑名单</li>
-      <li href="#" class="list-group-item">王旭雷达</li>
+    <div class="button-group list-group">
+      <li href="#" class="list-group-item">捕蟹笼 <input type="checkbox" ng-model="CC"> {{CC}}on {{DD}}</li>
+      <li href="#" class="list-group-item">图片隐藏 <input type="checkbox" checked={{CC}}> on </li>
+      <li href="#" class="list-group-item">黑名单 <input type="checkbox" checked={{CC}}> on </li>
+      <li href="#" class="list-group-item">王旭雷达 <input type="checkbox" checked={{CC}}> on </li>
     </div>
     <div id="status"></div>
     <button id="save" onclick="save();">Save</button>
     <script src="lib/angular.min.js"></script>
-    <script src="lib/bootstrap/dist/js/bootstrap.js"></script>
+    <!--<script src="lib/bootstrap/dist/js/bootstrap.js"></script>-->
     <script src="popup.js"></script>
   </body>
 </html>

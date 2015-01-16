@@ -1,7 +1,11 @@
 var popup = angular.module('popup', []);
 
 popup.controller('mainController', function ($scope) {
-  $scope.test = 'Nimasi';
+  chrome.storage.local.get('settings', function(response) {
+    var res = JSON.parse(response.settings);
+    console.log('w'+res.CC);
+    $scope.CC = res.CC;
+  });
 });
 
 function save() {
