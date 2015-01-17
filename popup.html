@@ -12,14 +12,17 @@
     </style>
   </head>
   <body ng-controller="mainController" class="container">
+    <form name="settings" ng-submit="saveSettings()">
     <div class="button-group list-group">
-      <li href="#" class="list-group-item">捕蟹笼 <input type="checkbox" ng-model="CC"> {{CC ? "ON" : "OFF"}}</li>
-      <li href="#" class="list-group-item">图片隐藏 <input type="checkbox" ng-model="HP"> {{HP ? "ON" : "OFF"}} </li>
-      <li href="#" class="list-group-item">黑名单 <input type="checkbox" ng-model="BL"> {{BL ? "ON" : "OFF"}}</li>
-      <li href="#" class="list-group-item">王旭雷达 <input type="checkbox" ng-model="WR"> {{WR ? "ON" : "OFF"}}</li>
+      <li href="#" class="list-group-item">捕蟹笼 <input type="checkbox" ng-model="settings.CC"> {{settings.CC ? "ON" : "OFF"}}</li>
+      <li href="#" class="list-group-item">图片隐藏 <input type="checkbox" ng-model="settings.HP"> {{settings.HP ? "ON" : "OFF"}} </li>
+      <li href="#" class="list-group-item">黑名单 <input type="checkbox" ng-model="settings.BL"> {{settings.BL ? "ON" : "OFF"}}</li>
+      <li href="#" class="list-group-item">王旭雷达 <input type="checkbox" ng-model="settings.WR"> {{settings.WR ? "ON" : "OFF"}}</li>
     </div>
     <div id="status"></div>
-    <button id="save" onclick="save();">Save</button>
+    <!--<button id="save" onclick="save();">Save</button>-->
+    <input type="submit" value="Save"/>
+    </form>
     <script src="lib/angular.min.js"></script>
     <!--<script src="lib/bootstrap/dist/js/bootstrap.js"></script>-->
     <script src="popup.js"></script>

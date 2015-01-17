@@ -17,14 +17,20 @@
   var floors = [];
   var floorId;
   var prevFloorId = -1;
+  var settings;
   var tpcId;
   tpcId = $('h1#j_data').attr('tid');
+
+  chrome.extension.sendRequest({storage: 'settings'}, function(response) {
+    console.log(response.storage);
+    settings = JSON.parse(response.storage);
+  });
 
   while (node = walk.nextNode()) {
     // Get images and push into array
     if(typeof node.tagName != 'undefined' && node.tagName === 'IMG') {
         // Only hide images in main topic or floors
-        if(floorId) {
+        if(typeof settings.HP != 'undefined' && settings.HP && floorId) {
           node.setAttribute('style', 'visibility:hidden');
           images[floorId] = 1;
         }
@@ -64,6 +70,7 @@
   }
 
   // Toggle images
+  if(typeof settings.HP != 'undefined' && settings.HP) {
   for(var k in images) {
     if(images.hasOwnProperty(k)) {
       // Highlight floor
@@ -80,6 +87,7 @@
         //}
       });
     }
+  }
   }
 
   $('div.floor').filter(function() {
