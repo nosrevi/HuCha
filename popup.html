@@ -13,10 +13,10 @@
   </head>
   <body ng-controller="mainController" class="container">
     <div class="button-group list-group">
-      <li href="#" class="list-group-item">捕蟹笼 <input type="checkbox" ng-model="CC"> {{CC}}on {{DD}}</li>
-      <li href="#" class="list-group-item">图片隐藏 <input type="checkbox" checked={{CC}}> on </li>
-      <li href="#" class="list-group-item">黑名单 <input type="checkbox" checked={{CC}}> on </li>
-      <li href="#" class="list-group-item">王旭雷达 <input type="checkbox" checked={{CC}}> on </li>
+      <li href="#" class="list-group-item">捕蟹笼 <input type="checkbox" ng-model="CC"> {{CC ? "ON" : "OFF"}}</li>
+      <li href="#" class="list-group-item">图片隐藏 <input type="checkbox" ng-model="HP"> {{HP ? "ON" : "OFF"}} </li>
+      <li href="#" class="list-group-item">黑名单 <input type="checkbox" ng-model="BL"> {{BL ? "ON" : "OFF"}}</li>
+      <li href="#" class="list-group-item">王旭雷达 <input type="checkbox" ng-model="WR"> {{WR ? "ON" : "OFF"}}</li>
     </div>
     <div id="status"></div>
     <button id="save" onclick="save();">Save</button>

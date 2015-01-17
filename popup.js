@@ -3,8 +3,11 @@ var popup = angular.module('popup', []);
 popup.controller('mainController', function ($scope) {
   chrome.storage.local.get('settings', function(response) {
     var res = JSON.parse(response.settings);
-    console.log('w'+res.CC);
     $scope.CC = res.CC;
+    $scope.HP = res.HP;
+    $scope.BL = res.BL;
+    $scope.WR = res.WR;
+    $scope.$apply();
   });
 });
 

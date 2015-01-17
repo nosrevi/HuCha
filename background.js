@@ -23,7 +23,7 @@ function checkForValidUrl(tabId, changeInfo, tab) {
   }
 };
 
-var settings = JSON.stringify({'CC':true});
+var settings = JSON.stringify({'CC':true, 'HP':true, 'BL':false, 'WR':false});
 //localStorage['settings'] = '1';
 chrome.storage.local.set({'settings': settings});
 chrome.tabs.onUpdated.addListener(checkForValidUrl);
