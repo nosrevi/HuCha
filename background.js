@@ -23,18 +23,30 @@ function checkForValidUrl(tabId, changeInfo, tab) {
   }
 };
 
-var settings = JSON.stringify({'CC':true, 'HP':true, 'BL':false, 'WR':false});
+//var settings = JSON.stringify({'CC':true, 'HP':true, 'BL':false, 'WR':false});
 //localStorage['settings'] = '1';
-chrome.storage.local.set({'settings': settings});
+if (typeof localStorage.settings == 'undefined') {
+  localStorage.settings = JSON.stringify({
+    'CC' : false,
+    'HP' : false,
+    'BL' : false,
+    'WR' : true 
+  });
+}
+//chrome.storage.local.set({'settings': settings});
 chrome.tabs.onUpdated.addListener(checkForValidUrl);
 
-chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
-  if (request.storage) {
-    if (typeof request.value != 'undefined') {
-      localStorage[request.storage] = request.value;
-    }
-    sendResponse({storage: localStorage[request.storage]});
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  if (request.method == 'getSettings') {
+      console.log('gs'+localStorage.settings);
+      sendResponse({'settings':localStorage.settings});
+//    chrome.storage.local.get('settings', function(response) {
+//      var res = response.settings;
+//      console.log(res);
+//      sendResponse({n: '1'});
+//    });
   } else {
+      console.log('el'+localStorage.settings);
     sendResponse({});
   }
 });
