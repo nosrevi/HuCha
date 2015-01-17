@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "Hupu Extension",
+  "name": "虎插 - 虎扑论坛助手",
   "version": "0.1",
   "description": "customise your Hupu experience",
   "icons": {
@@ -15,8 +15,8 @@
     "storage"
   ],
   "page_action": {
-    "default_icon": "images/marker.png",
-    "default_title": "Hupu Filter",
+    "default_icon": "images/icon.png",
+    "default_title": "Hupu Extension",
     "default_popup": "popup.html"
   },
 

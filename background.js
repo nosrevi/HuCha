@@ -1,10 +1,3 @@
-allFilters = null;
-
-function setFilters(newFilters) {
-  allFilters = newFilters;
-  localStorage["filters"] = JSON.stringify(newFilters);
-}
-
 function getDomainFromUrl(url){
   var host = "null";
   if(typeof url == "undefined" || null == url)
@@ -23,39 +16,30 @@ function checkForValidUrl(tabId, changeInfo, tab) {
   }
 };
 
-//var settings = JSON.stringify({'CC':true, 'HP':true, 'BL':false, 'WR':false});
-//localStorage['settings'] = '1';
-if (typeof localStorage.settings == 'undefined') {
-  localStorage.settings = JSON.stringify({
-    'CC' : false,
-    'HP' : false,
-    'BL' : false,
-    'WR' : true 
-  });
+// Initialization.
+function init() {
+  if(typeof localStorage.settings == 'undefined') {
+    localStorage.settings = JSON.stringify({
+      'CC' : false,
+      'HP' : false,
+      'BL' : false,
+      'WR' : true 
+    });
+  }
+  if(typeof localStorage.blackList == 'undefined') {
+    localStorage.blackList = JSON.stringify([]);
+  }
 }
-//chrome.storage.local.set({'settings': settings});
+
 chrome.tabs.onUpdated.addListener(checkForValidUrl);
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  if (request.method == 'getSettings') {
-      console.log('gs'+localStorage.settings);
-      sendResponse({'settings':localStorage.settings});
-//    chrome.storage.local.get('settings', function(response) {
-//      var res = response.settings;
-//      console.log(res);
-//      sendResponse({n: '1'});
-//    });
+  if(request.method == 'getSettings') {
+    sendResponse({'settings':localStorage.settings});
+  } else if(request.method == 'getBlackList') {
+    //sendResponse({'blackList':localStorage.blackList});
+    sendResponse({'blackList':JSON.stringify(['无神过往','casablancangel'])});
   } else {
-      console.log('el'+localStorage.settings);
     sendResponse({});
   }
 });
-
-// Initialization.
-function init() {
-  if (localStorage["filters"] == undefined) {
-    setFilters(defaultFilters);
-  } else {
-    allFilters = JSON.parse(localStorage["filters"]);
-  }
-}

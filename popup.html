@@ -3,25 +3,18 @@
   <head>
     <title>Getting Started Extension's Popup</title>
     <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css"/>
-    <style type="text/css">
-        body {
-            height: 200px;
-            width: 250px;
-            overflow-x: hidden;
-        }
-    </style>
+    <link rel="stylesheet" href="css/main.css"/>
   </head>
-  <body ng-controller="mainController" class="container">
-    <form name="settings" ng-submit="saveSettings()">
+  <body ng-controller="mainController">
+    <form name="settings" class="container" ng-submit="saveSettings()">
     <div class="button-group list-group">
-      <li href="#" class="list-group-item">捕蟹笼 <input type="checkbox" ng-model="CC"> {{CC ? "ON" : "OFF"}}</li>
-      <li href="#" class="list-group-item">图片隐藏 <input type="checkbox" ng-model="HP"> {{HP ? "ON" : "OFF"}} </li>
-      <li href="#" class="list-group-item">黑名单 <input type="checkbox" ng-model="BL"> {{BL ? "ON" : "OFF"}}</li>
-      <li href="#" class="list-group-item">王旭雷达 <input type="checkbox" ng-model="WR"> {{WR ? "ON" : "OFF"}}</li>
+      <li href="#" class="list-group-item">捕蟹笼 <span><input type="checkbox" ng-model="CC"> {{CC ? "ON" : "OFF"}}</span></li>
+      <li href="#" class="list-group-item">图片隐藏 <span><input type="checkbox" ng-model="HP"> {{HP ? "ON" : "OFF"}}</span></li>
+      <li href="#" class="list-group-item">黑名单 <span><input type="checkbox" ng-model="BL"> {{BL ? "ON" : "OFF"}}</span></li>
+      <li href="#" class="list-group-item">王旭雷达 <span><input type="checkbox" ng-model="WR"> {{WR ? "ON" : "OFF"}}</span></li>
     </div>
     <div id="status"></div>
-    <button id="save" onclick="test();">test</button>
-    <input type="submit" value="Save"/>
+    <button class="btn btn-default" type="submit" value="Save"/>保存</button>
     </form>
     <script src="lib/angular.min.js"></script>
     <!--<script src="lib/bootstrap/dist/js/bootstrap.js"></script>-->

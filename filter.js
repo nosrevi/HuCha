@@ -3,7 +3,7 @@
   var matcher = new RegExp('火箭', 'g');
   var crab_catcher = new RegExp('\\*河蟹\\*', 'g');
   var wangxu_catcher = new RegExp('[\u4e00-\u9eff] [\u4e00-\u9eff] [\u4e00-\u9eff] [\u4e00-\u9eff] ', 'g');
-  //var wangxu = new RegExp('\w \w \w \w ', 'g');
+
   var walk = document.createTreeWalker(  
     document.body,
     NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT,
@@ -13,8 +13,6 @@
     false
   );
 
-  var count = 0;
-  var node;
   var images = {};
   var crabs = [];
   var wangxu = [];
@@ -23,9 +21,8 @@
   var floorId;
   var prevFloorId = -1;
   var settings;
-  var tpcId;
-  tpcId = $('h1#j_data').attr('tid');
 
+  // React based on the settings we get
   chrome.runtime.sendMessage({method: 'getSettings'}, function(response) {
     settings = JSON.parse(response.settings);
     traverse();
@@ -36,7 +33,7 @@
       hidePictures();
     }
     if (settings.BL) {
-
+      blackList();
     }
     if (settings.WR) {
       wangxuRadar();
@@ -44,6 +41,7 @@
   });
 
   function traverse() {
+    var node;
     while (node = walk.nextNode()) {
       // Get images and push into array
       if(typeof node.tagName != 'undefined' && node.tagName === 'IMG') {
@@ -52,8 +50,6 @@
           node.setAttribute('style', 'visibility:hidden');
           images[floorId] = 1;
         }
-        //node.addEventListener("mouseout", rehide, false);
-        //node.parentNode.removeChild(node);
         continue;
       }
 
@@ -91,23 +87,37 @@
       if(images.hasOwnProperty(k)) {
         // Highlight floor
         $('div#readfloor').children('div.floor#'+k).click( function(){ 
-          //if($(this).find('img').css('visibility') === 'hidden') {
-            $(this).find('img').css('visibility', ($(this).find('img').css('visibility') === 'hidden') ? 'visible' : 'hidden');
-          //}
+          $(this).find('img').css('visibility', ($(this).find('img').css('visibility') === 'hidden') ? 'visible' : 'hidden');
         });
 
         // Regular floor
         $('div#t_main').children('div.floor#'+k).click( function(){ 
-          //if($(this).find('img').css('visibility') === 'hidden') {
-            $(this).find('img').css('visibility', ($(this).find('img').css('visibility') === 'hidden') ? 'visible' : 'hidden');
-          //}
+           $(this).find('img').css('visibility', ($(this).find('img').css('visibility') === 'hidden') ? 'visible' : 'hidden');
         });
       }
     }
   }
 
-  function httpGet(theUrl)
-  {
+  // Black List
+  function blackList() {
+
+    chrome.runtime.sendMessage({method: 'getBlackList'}, function(response) {
+      var bl = JSON.parse(response.blackList);
+
+      // Remove reply in a topic
+      $('div.floor').filter(function() {
+        // check if author in BlackList array
+        return bl.indexOf($(this).find('a.u').first().text()) >= 0;
+      }).remove();
+
+      // Remove topic
+      for(var i in bl){
+        $('td.p_author:contains("'+bl[i]+'")').parent().remove('');
+      }
+    });
+  }
+
+  function httpGet(theUrl) {
       var xmlHttp = null;
 
       xmlHttp = new XMLHttpRequest();
@@ -116,18 +126,11 @@
       return xmlHttp.responseText;
   }
 
-  // Black List
-  function blackList() {
-    var bl = localStorage.blackList || [];
-    $('div.floor').filter(function() {
-      return $(this).find('a.u').text() == 'HPWP';
-    }).remove();
-    $('td.p_author:contains("wanghuanchen")').parent().remove('');
-  }
-
   // Crab Catcher
   function crabCatcher() {
-    for(var i=0; node = crabs[i]; i++) {
+    var tpcId = $('h1#j_data').attr('tid');
+
+    for(var i=0; i<floors.length; i++) {
       var floorNode = $('div#'+floors[i]+' table tr td').first();
       var articleId = (floors[i] == 'tpc') ? '0': '1';
       var floorContent = httpGet('http://bbs.hupu.com/get_quote.php?article='+articleId+'&tid='+tpcId+'&pid='+floors[i]);
@@ -141,7 +144,7 @@
 
   // Wangxu Radar
   function wangxuRadar() {
-    for(var i=0; i < wangxu.length; i++) {
+    for(var i=0; i<wangxu.length; i++) {
       var floorNode = $('div#'+wangxu[i]+' table tr td').first();
       var wxId = 'wx'+wangxu[i];
       var floorContent = '<b>检测到王旭体!! 请慎重点击<a onclick="$(\'#'+wxId+'\').css(\'display\', \'block\');">查看原文</a>:</b>';
