@@ -26,3 +26,8 @@ body {
 td {
   border-bottom: 1px solid #ddd;
 }
+
+.bl-row {
+  margin-left: 3px;
+  margin-right: 3px;
+}

@@ -20,3 +20,8 @@ popup.controller('mainController', function ($scope) {
   
 });
 
+popup.controller('blController', function ($scope) {
+  
+  $scope.blist = ['a','b','c','d','e'];
+});
+

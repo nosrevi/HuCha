@@ -16,16 +16,13 @@
   var images = {};
   var crabs = [];
   var wangxu = [];
-  var hasWangxu = false;
   var floors = [];
-  var floorId;
-  var prevFloorId = -1;
-  var settings;
 
   // React based on the settings we get
   chrome.runtime.sendMessage({method: 'getSettings'}, function(response) {
-    settings = JSON.parse(response.settings);
+    var settings = JSON.parse(response.settings);
     traverse();
+
     if (settings.CC) {
       crabCatcher();
     }
@@ -42,6 +39,10 @@
 
   function traverse() {
     var node;
+    var floorId;
+    var prevFloorId = -1;
+    var hasWangxu = false;
+
     while (node = walk.nextNode()) {
       // Get images and push into array
       if(typeof node.tagName != 'undefined' && node.tagName === 'IMG') {

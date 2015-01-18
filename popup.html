@@ -5,8 +5,9 @@
     <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css"/>
     <link rel="stylesheet" href="css/main.css"/>
   </head>
-  <body ng-controller="mainController">
-    <form name="settings" class="container" ng-submit="saveSettings()">
+  <body>
+<!--
+    <form ng-controller="mainController" name="settings" class="container" ng-submit="saveSettings()">
       <table class="table table-hover">
         <tbody>
           <tr>
@@ -28,7 +29,29 @@
         </tbody>
       </table>
       <div align="center">
-        <button class="btn btn-danger" type="submit" value="Save"/><span class="glyphicon glyphicon-save" aria-hidden="true"></span> 保存设置</button>
+        <span>虎插 v0.1</span> <button class="btn btn-danger" type="submit" value="Save"/><span class="glyphicon glyphicon-save" aria-hidden="true"></span> 保存设置</button>
+      </div>
+    </form>
+-->
+
+    <form ng-controller="blController" name="settings" class="container" ng-submit="saveSettings()">
+      <div class="bl-row">
+        <input type="hidden" name="count" value="1" />
+        <div class="control-group" id="fields">
+          <label class="control-label" for="field1">黑名单</label>
+          <div class="controls" id="profs"> 
+              <form class="input-append">
+                  <div id="field"><input autocomplete="off" class="input" id="field1" name="prof1" type="text" placeholder="请输入用户名" size="15" data-items="8"/><button id="b1" class="btn add-more" type="button" ng-click="addBl()">+</button></div>
+              </form>
+          <br>
+          </div>
+          <ul ng-repeat="user in blist">
+            <li>{{user}}</li>
+          </ul>
+        </div>
+      </div>
+      <div align="center">
+        <span>虎插 v0.1</span> <button class="btn btn-danger" type="submit" value="Save"/><span class="glyphicon glyphicon-save" aria-hidden="true"></span> 保存设置</button>
       </div>
     </form>
     <script src="lib/angular.min.js"></script>
