@@ -55,7 +55,7 @@
 
       if(typeof node.tagName != 'undefined' && node.tagName=='DIV' && node.getAttribute('class') == 'floor') {
         // Get floor Id before crab searching
-        floorId = node.getAttribute('id');
+        floorId = node.getAttribute('id') || 'recommandBox'; // if no floor Id, it's in recommand box
         hasWangxu = false;
       }
 
@@ -85,15 +85,22 @@
   function hidePictures() {
     for(var k in images) {
       if(images.hasOwnProperty(k)) {
-        // Highlight floor
-        $('div#readfloor').children('div.floor#'+k).click( function(){ 
-          $(this).find('img').css('visibility', ($(this).find('img').css('visibility') === 'hidden') ? 'visible' : 'hidden');
-        });
+        if(k=='recommandBox') {
+          // Recommand Box
+          $('div.l_w_reply').click( function(){
+            $(this).find('img').css('visibility', ($(this).find('img').css('visibility') === 'hidden') ? 'visible' : 'hidden');
+          });
+        } else {
+          // Highlight floor
+          $('div#readfloor').children('div.floor#'+k).click( function(){ 
+            $(this).find('img').css('visibility', ($(this).find('img').css('visibility') === 'hidden') ? 'visible' : 'hidden');
+          });
 
-        // Regular floor
-        $('div#t_main').children('div.floor#'+k).click( function(){ 
-           $(this).find('img').css('visibility', ($(this).find('img').css('visibility') === 'hidden') ? 'visible' : 'hidden');
-        });
+          // Regular floor
+          $('div#t_main').children('div.floor#'+k).click( function(){ 
+            $(this).find('img').css('visibility', ($(this).find('img').css('visibility') === 'hidden') ? 'visible' : 'hidden');
+          });
+        }
       }
     }
   }
