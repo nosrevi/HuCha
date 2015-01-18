@@ -1,0 +1,28 @@
+body {
+  width: 180px;
+  height: 160px;
+  overflow-x: hidden;
+}
+
+.container {
+  padding: 3px;
+}
+
+.table {
+  margin-bottom: 5px;
+}
+
+.switch {
+  float: right;
+}
+
+.btn {
+  /*background-color: #a92229;
+  color: #fff;*/
+  padding: 3px;
+  left: 50%;
+}
+
+td {
+  border-bottom: 1px solid #ddd;
+}

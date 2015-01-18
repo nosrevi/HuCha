@@ -7,14 +7,30 @@
   </head>
   <body ng-controller="mainController">
     <form name="settings" class="container" ng-submit="saveSettings()">
-    <div class="button-group list-group">
-      <li href="#" class="list-group-item">捕蟹笼 <span><input type="checkbox" ng-model="CC"> {{CC ? "ON" : "OFF"}}</span></li>
-      <li href="#" class="list-group-item">图片隐藏 <span><input type="checkbox" ng-model="HP"> {{HP ? "ON" : "OFF"}}</span></li>
-      <li href="#" class="list-group-item">黑名单 <span><input type="checkbox" ng-model="BL"> {{BL ? "ON" : "OFF"}}</span></li>
-      <li href="#" class="list-group-item">王旭雷达 <span><input type="checkbox" ng-model="WR"> {{WR ? "ON" : "OFF"}}</span></li>
+    <table class="table table-hover">
+        <tbody>
+            <tr>
+                <td><span class="mode_lite_name"><span class="glyphicon glyphicon-certificate" aria-hidden="true"></span> 捕蟹笼 </span></td>
+                <td><span class="mode_lite_desc"><span class="switch"><input type="checkbox" ng-model="CC"> {{CC ? "ON" : "OFF"}}</span></span></td>
+            </tr>
+            <tr>
+                <td><span class="mode_lite_name"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> 图片隐藏 </span></td>
+                <td><span class="mode_lite_desc"><span class="switch"><input type="checkbox" ng-model="HP"> {{HP ? "ON" : "OFF"}}</span></span></td>
+            </tr>
+            <tr>
+                <td><span class="mode_lite_name"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> 黑名单 | <a><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a></span></td>
+                <td><span class="mode_lite_desc"><span class="switch"><input type="checkbox" ng-model="BL"> {{BL? "ON" : "OFF"}}</span></span></td>
+            </tr>
+            <tr>
+                <td><span class="mode_lite_name"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> 王旭雷达 </span></td>
+                <td><span class="mode_lite_desc"><span class="switch"><input type="checkbox" ng-model="WR"> {{WR? "ON" : "OFF"}}</span></span></td>
+            </tr>
+        </tbody>
+    </table>
+    <div align="center">
+      <button class="btn btn-danger" type="submit" value="Save"/><span class="glyphicon glyphicon-save" aria-hidden="true"></span> 保存设置</button>
     </div>
-    <div id="status"></div>
-    <button class="btn btn-default" type="submit" value="Save"/>保存</button>
+    
     </form>
     <script src="lib/angular.min.js"></script>
     <!--<script src="lib/bootstrap/dist/js/bootstrap.js"></script>-->
