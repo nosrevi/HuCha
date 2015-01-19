@@ -15,12 +15,12 @@
     false
   );
 
-  // images works as a hash table to store Id of floors that have image
+  // works as a hash table to store Id of floors that have image
   var images = {};
   // store Id of floors that have 王旭体
-  var wangxu = [];
+  var wangxu = {};
   // store Id of floors that have *河蟹*
-  var crabs = [];
+  var crabs = {};
 
   var settings;
 
@@ -70,12 +70,12 @@
 
         if (settings.WR && !hasWangxu && wangxu_catcher.test(node.nodeValue)) {
           hasWangxu = true;
-          wangxu.push(floorId);
+          wangxu[floorId] = 1;
         }
 
         if (settings.CC && crab_catcher.test(node.nodeValue)) {
           if (prevFloorId != floorId) {
-            crabs.push(floorId);
+            crabs[floorId] = 1;
             prevFloorId = floorId;
           }
         }
@@ -140,25 +140,44 @@
   function crabCatcher() {
     var tpcId = $('h1#j_data').attr('tid');
 
-    for (var i=0; i<crabs.length; i++) {
-      var floorNode = $('div#'+crabs[i]+' table tr td').first();
-      var articleId = (crabs[i] == 'tpc') ? '0': '1';
-      var floorContent = httpGet('http://bbs.hupu.com/get_quote.php?article='+articleId+'&tid='+tpcId+'&pid='+crabs[i]);
-      if(floorNode.children('blockquote').length) {
-        floorNode.html('<blockquote>'+floorNode.children('blockquote').html()+'</blockquote>' + floorContent);
-      } else {
-        floorNode.html(floorContent);
+    for (var k in crabs) {
+      if (crabs.hasOwnProperty(k)) {
+        // Highlight floor
+        var liangFloorNode = $('div#readfloor').children('div.floor#'+k).find('td').first();
+        // Regular floor
+        var floorNode = $('div#t_main').children('div.floor#'+k).find('td').first();
+
+        var articleId = (k == 'tpc') ? '0': '1';
+        var floorContent = httpGet('http://bbs.hupu.com/get_quote.php?article='+articleId+'&tid='+tpcId+'&pid='+k);
+
+        if(floorNode.children('blockquote').length) {
+            //Keep quoted text as what it is
+            floorNode.html('<blockquote>'+floorNode.children('blockquote').html()+'</blockquote>' + floorContent);
+            liangFloorNode.html('<blockquote>'+liangFloorNode.children('blockquote').html()+'</blockquote>' + floorContent);
+        } else {
+            floorNode.html(floorContent);
+            liangFloorNode.html(floorContent);
+        }
       }
     }
   }
 
   // Wangxu Radar
   function wangxuRadar() {
-    for (var i=0; i<wangxu.length; i++) {
-      var floorNode = $('div#'+wangxu[i]+' table tr td').first();
-      var wxId = 'wx'+wangxu[i];
-      var floorContent = '<b>检测到王旭体!! 请慎重点击<a onclick="$(\'#'+wxId+'\').css(\'display\', \'block\');">查看原文</a>:</b>';
-      floorNode.html(floorContent+'<div id="'+wxId+'" style="display:none"><a onclick="$(\'#'+wxId+'\').css(\'display\', \'none\');">收起</a>'+floorNode.html()+'</div>');
+    for (var k in wangxu) {
+      if (wangxu.hasOwnProperty(k)) {
+        var wxId = 'wx'+k;
+        // Highlight floor
+        var liangFloorNode = $('div#readfloor').children('div.floor#'+k).find('td').first();
+        // Regular floor
+        var floorNode = $('div#t_main').children('div.floor#'+k).find('td').first();
+
+        var liangFloorContent = '<b>检测到王旭体!! 请慎重点击<a onclick="$(\'#l'+wxId+'\').css(\'display\', \'block\');">查看原文</a>:</b>';
+        var floorContent = '<b>检测到王旭体!! 请慎重点击<a onclick="$(\'#'+wxId+'\').css(\'display\', \'block\');">查看原文</a>:</b>';
+
+        liangFloorNode.html(liangFloorContent+'<div id="l'+wxId+'" style="display:none"><a onclick="$(\'#l'+wxId+'\').css(\'display\', \'none\');">收起</a>'+liangFloorNode.html()+'</div>');
+        floorNode.html(floorContent+'<div id="'+wxId+'" style="display:none"><a onclick="$(\'#'+wxId+'\').css(\'display\', \'none\');">收起</a>'+floorNode.html()+'</div>');
+      }
     }
   }
 

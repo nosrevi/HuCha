@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
   "name": "虎插 - 虎扑论坛助手插件",
-  "version": "0.1",
-  "description": "customise your Hupu experience",
+  "version": "0.2",
+  "description": "Customise your Hupu experience",
   "icons": {
     "30": "images/icon.png",
     "128": "images/icon128.png"
