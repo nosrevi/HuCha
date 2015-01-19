@@ -1,10 +1,11 @@
 {
   "manifest_version": 2,
-  "name": "虎插 - 虎扑论坛助手",
+  "name": "虎插 - 虎扑论坛助手插件",
   "version": "0.1",
   "description": "customise your Hupu experience",
   "icons": {
-    "38": "images/icon.png"
+    "30": "images/icon.png",
+    "128": "images/icon128.png"
   },
   "background": {
     "scripts": ["background.js"],
