@@ -172,11 +172,11 @@
         // Regular floor
         var floorNode = $('div#t_main').children('div.floor#'+k).find('td').first();
 
-        var liangFloorContent = '<b>检测到王旭体!! 请慎重点击<a onclick="$(\'#l'+wxId+'\').css(\'display\', \'block\');">查看原文</a>:</b>';
-        var floorContent = '<b>检测到王旭体!! 请慎重点击<a onclick="$(\'#'+wxId+'\').css(\'display\', \'block\');">查看原文</a>:</b>';
+        var liangFloorContent = '<b>This could be Wangxu!!<a onclick="$(\'#l'+wxId+'\').css(\'display\', \'block\');">Click here</a> if you really want to see it:</b>';
+        var floorContent = '<b>This could be Wangxu!! <a onclick="$(\'#'+wxId+'\').css(\'display\', \'block\');">Click here</a> if you really want to see it:</b>';
 
-        liangFloorNode.html(liangFloorContent+'<div id="l'+wxId+'" style="display:none"><a onclick="$(\'#l'+wxId+'\').css(\'display\', \'none\');">收起</a>'+liangFloorNode.html()+'</div>');
-        floorNode.html(floorContent+'<div id="'+wxId+'" style="display:none"><a onclick="$(\'#'+wxId+'\').css(\'display\', \'none\');">收起</a>'+floorNode.html()+'</div>');
+        liangFloorNode.html(liangFloorContent+'<div id="l'+wxId+'" style="display:none"><a onclick="$(\'#l'+wxId+'\').css(\'display\', \'none\');">Fold up</a>'+liangFloorNode.html()+'</div>');
+        floorNode.html(floorContent+'<div id="'+wxId+'" style="display:none"><a onclick="$(\'#'+wxId+'\').css(\'display\', \'none\');">Fold up</a>'+floorNode.html()+'</div>');
       }
     }
   }
