@@ -1,25 +1,30 @@
 (function () {
 
-  var matcher = new RegExp('火箭', 'g');
+  // match *河蟹*
   var crab_catcher = new RegExp('\\*河蟹\\*', 'g');
+  // match 王旭体, which is 一 个 汉 字 一 个 空 格 一 个 汉 字 一 个... 
   var wangxu_catcher = new RegExp('[\u4e00-\u9eff] [\u4e00-\u9eff] [\u4e00-\u9eff] [\u4e00-\u9eff] ', 'g');
 
+  // create a DOM tree walker
   var walk = document.createTreeWalker(  
-    document.body,
-    NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT,
+    document.body, // set traversal root to document.body
+    NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT, // accept both element node and text node
     {acceptNode: function (node) {
         return NodeFilter.FILTER_ACCEPT;
     }},
     false
   );
 
+  // images works as a hash table to store Id of floors that have image
   var images = {};
-  var crabs = [];
+  // store Id of floors that have 王旭体
   var wangxu = [];
-  var floors = [];
+  // store Id of floors that have *河蟹*
+  var crabs = [];
+
   var settings;
 
-  // React based on the settings we get
+  // react based on the settings we get
   chrome.runtime.sendMessage({method: 'getSettings'}, function(response) {
     settings = JSON.parse(response.settings);
     traverse();
@@ -45,9 +50,9 @@
     var hasWangxu = false;
 
     while (node = walk.nextNode()) {
-      // Get images and push into array
-      if(typeof node.tagName != 'undefined' && node.tagName === 'IMG') {
-        // Only hide images in main topic or floors
+      // get images and push into array
+      if (typeof node.tagName != 'undefined' && node.tagName === 'IMG') {
+        // only hide images in main topic or floors
         if(settings.HP && floorId) {
           node.setAttribute('style', 'visibility:hidden');
           images[floorId] = 1;
@@ -55,39 +60,35 @@
         continue;
       }
 
-      if(typeof node.tagName != 'undefined' && node.tagName=='DIV' && node.getAttribute('class') == 'floor') {
-        // Get floor Id before crab searching
+      if (typeof node.tagName != 'undefined' && node.tagName=='DIV' && node.getAttribute('class') == 'floor') {
+        // get floor Id before crab searching
         floorId = node.getAttribute('id') || 'recommandBox'; // if no floor Id, it's in recommand box
         hasWangxu = false;
       }
 
-      if(node.nodeName == '#text'){
-        // Keyword replace for text nodes
-        node.nodeValue = node.nodeValue.replace(matcher, function () {
-          return '傻逼火箭';
-        });
+      if (node.nodeName == '#text') {
 
-        if (!hasWangxu && wangxu_catcher.test(node.nodeValue)) {
+        if (settings.WR && !hasWangxu && wangxu_catcher.test(node.nodeValue)) {
           hasWangxu = true;
           wangxu.push(floorId);
         }
 
-        if(crab_catcher.test(node.nodeValue)) {
-          if(prevFloorId != floorId) {
-            floors.push(floorId);
-            crabs.push(node);
+        if (settings.CC && crab_catcher.test(node.nodeValue)) {
+          if (prevFloorId != floorId) {
+            crabs.push(floorId);
             prevFloorId = floorId;
           }
         }
+
       }
     }
   }
 
   // Hide Pictures 
   function hidePictures() {
-    for(var k in images) {
-      if(images.hasOwnProperty(k)) {
-        if(k=='recommandBox') {
+    for (var k in images) {
+      if (images.hasOwnProperty(k)) {
+        if (k=='recommandBox') {
           // Recommand Box
           $('div.l_w_reply').click( function(){
             $(this).find('img').css('visibility', ($(this).find('img').css('visibility') === 'hidden') ? 'visible' : 'hidden');
@@ -120,7 +121,7 @@
       }).remove();
 
       // Remove topic
-      for(var i in bl){
+      for (var i in bl) {
         $('td.p_author:contains("'+bl[i]+'")').parent().remove('');
       }
     });
@@ -139,10 +140,10 @@
   function crabCatcher() {
     var tpcId = $('h1#j_data').attr('tid');
 
-    for(var i=0; i<floors.length; i++) {
-      var floorNode = $('div#'+floors[i]+' table tr td').first();
-      var articleId = (floors[i] == 'tpc') ? '0': '1';
-      var floorContent = httpGet('http://bbs.hupu.com/get_quote.php?article='+articleId+'&tid='+tpcId+'&pid='+floors[i]);
+    for (var i=0; i<crabs.length; i++) {
+      var floorNode = $('div#'+crabs[i]+' table tr td').first();
+      var articleId = (crabs[i] == 'tpc') ? '0': '1';
+      var floorContent = httpGet('http://bbs.hupu.com/get_quote.php?article='+articleId+'&tid='+tpcId+'&pid='+crabs[i]);
       if(floorNode.children('blockquote').length) {
         floorNode.html('<blockquote>'+floorNode.children('blockquote').html()+'</blockquote>' + floorContent);
       } else {
@@ -153,7 +154,7 @@
 
   // Wangxu Radar
   function wangxuRadar() {
-    for(var i=0; i<wangxu.length; i++) {
+    for (var i=0; i<wangxu.length; i++) {
       var floorNode = $('div#'+wangxu[i]+' table tr td').first();
       var wxId = 'wx'+wangxu[i];
       var floorContent = '<b>检测到王旭体!! 请慎重点击<a onclick="$(\'#'+wxId+'\').css(\'display\', \'block\');">查看原文</a>:</b>';
@@ -161,18 +162,22 @@
     }
   }
 
-  $('small').remove();
-  $('div.sign').remove();
-  //$('img').remove();
-  $('#topPub').remove();
-  $('.c2c_ad').remove();
-  $('div#ad').remove();
-  $('.bbs-index-weixin').remove();
-  $('.pl_nav').remove();
-  $('.rss').remove();
-  $('.otherplate').remove(); // 友情版块
-  $('.hp-footer').remove();
-//  $('.hp-header').remove();
+/*
+ * Personal Settings
+ * Removes sections I don't want to see
+ *
 
-  //chrome.runtime.sendMessage(undefined, {replacedOccurences: count});
+  $('small').remove(); // "发送自..."
+  $('div.sign').remove(); // signature
+  $('#topPub').remove(); // top banner ad
+  $('.c2c_ad').remove(); // top banner
+  $('div#ad').remove(); // more ads
+  $('.bbs-index-weixin').remove(); // right side ad 
+  $('.pl_nav').remove(); // section nav
+  $('.rss').remove(); // RSS subscrbtion
+  $('.otherplate').remove(); // 友情版块
+  $('.hp-footer').remove(); // footer
+
+*/
+
 }());

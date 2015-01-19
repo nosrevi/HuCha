@@ -20,11 +20,9 @@
     "default_popup": "popup.html"
   },
 
-  "options_page": "options.html",
-
   "content_scripts": [
     {
-      "matches": ["http://*.hupu.com/*", "https://*.hupu.com/*"],
+      "matches": ["http://bbs.hupu.com/*", "https://bbs.hupu.com/*"],
       "js": ["lib/jquery-1.11.2.min.js","filter.js"],
       "run_at": "document_end"
     }
