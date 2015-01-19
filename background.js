@@ -18,7 +18,7 @@ function checkForValidUrl(tabId, changeInfo, tab) {
 
 // Initialization.
 function init() {
-  if(typeof localStorage.settings == 'undefined') {
+  if(localStorage.getItem('settings') === null) {
     localStorage.settings = JSON.stringify({
       'CC' : false,
       'HP' : false,
@@ -26,8 +26,8 @@ function init() {
       'WR' : true 
     });
   }
-  if(typeof localStorage.blackList == 'undefined') {
-    localStorage.blackList = JSON.stringify([]);
+  if(localStorage.getItem('blacklist') === null) {
+    localStorage.blacklist = JSON.stringify([]);
   }
 }
 
@@ -36,9 +36,10 @@ chrome.tabs.onUpdated.addListener(checkForValidUrl);
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if(request.method == 'getSettings') {
     sendResponse({'settings':localStorage.settings});
-  } else if(request.method == 'getBlackList') {
-    //sendResponse({'blackList':localStorage.blackList});
-    sendResponse({'blackList':JSON.stringify(['无神过往','casablancangel'])});
+  } else if(request.method == 'getBlacklist') {
+    //sendResponse({'blacklist':localStorage.blacklist});
+    console.log(localStorage.blacklist);
+    sendResponse({'blacklist':localStorage.blacklist});
   } else {
     sendResponse({});
   }

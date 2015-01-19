@@ -17,10 +17,11 @@
   var crabs = [];
   var wangxu = [];
   var floors = [];
+  var settings;
 
   // React based on the settings we get
   chrome.runtime.sendMessage({method: 'getSettings'}, function(response) {
-    var settings = JSON.parse(response.settings);
+    settings = JSON.parse(response.settings);
     traverse();
 
     if (settings.CC) {
@@ -109,8 +110,8 @@
   // Black List
   function blackList() {
 
-    chrome.runtime.sendMessage({method: 'getBlackList'}, function(response) {
-      var bl = JSON.parse(response.blackList);
+    chrome.runtime.sendMessage({method: 'getBlacklist'}, function(response) {
+      var bl = JSON.parse(response.blacklist);
 
       // Remove reply in a topic
       $('div.floor').filter(function() {

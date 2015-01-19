@@ -1,5 +1,5 @@
 body {
-  width: 180px;
+  width: 200px;
   height: 160px;
   overflow-x: hidden;
 }
@@ -17,10 +17,7 @@ body {
 }
 
 .btn {
-  /*background-color: #a92229;
-  color: #fff;*/
   padding: 3px;
-  left: 50%;
 }
 
 td {
@@ -30,4 +27,24 @@ td {
 .bl-row {
   margin-left: 3px;
   margin-right: 3px;
+}
+
+.btn-del, .btn-add {
+  float: right;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+#field {
+  margin-bottom: 5px;
+}
+
+.edit:hover {
+  cursor: pointer; 
+  color: #a92229;
+  text-decoration: none;
+}
+
+a {
+  color: #000;
 }
