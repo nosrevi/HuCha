@@ -4,6 +4,8 @@
   var crab_catcher = new RegExp('\\*河蟹\\*', 'g');
   // match 王旭体, which is 一 个 汉 字 一 个 空 格 一 个 汉 字 一 个... 
   var wangxu_catcher = new RegExp('[\u4e00-\u9eff] [\u4e00-\u9eff] [\u4e00-\u9eff] [\u4e00-\u9eff] ', 'g');
+  // match 约炮广告
+  var GQ_catcher = new RegExp('http://www\.*\.GQ', 'g');
 
   // create a DOM tree walker
   var walk = document.createTreeWalker(  
@@ -21,6 +23,8 @@
   var wangxu = {};
   // store Id of floors that have *河蟹*
   var crabs = {};
+  // store Id of floors that have yuepao AD
+  var GQ = {};
 
   var settings;
 
@@ -29,6 +33,12 @@
     settings = JSON.parse(response.settings);
     traverse();
 
+    // removing yuepao AD by default
+    for (var k in GQ) {
+      if (GQ.hasOwnProperty(k)) {
+        $('#'+k).remove('');
+      }
+    }
     if (settings.CC) {
       crabCatcher();
     }
@@ -64,6 +74,10 @@
         // get floor Id before crab searching
         floorId = node.getAttribute('id') || 'recommandBox'; // if no floor Id, it's in recommand box
         hasWangxu = false;
+      }
+
+      if (typeof node.tagName != 'undefined' && node.tagName=='A' && GQ_catcher.test(node.getAttribute('href'))) {
+        GQ[floorId] = 1;
       }
 
       if (node.nodeName == '#text') {
